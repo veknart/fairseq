@@ -81,7 +81,7 @@ simuleval \
     --fixed-pre-decision-ratio ${step} \
 ```
 
-The evaluation result on `tst-COMMON` is, which you can find in the ${OUTPUT_DIR} folder:
+The evaluation result on `tst-COMMON` is:
 ```bash
 BLEU       AL    AP      DAL
 13.762 5112.337 0.798 5061.954
