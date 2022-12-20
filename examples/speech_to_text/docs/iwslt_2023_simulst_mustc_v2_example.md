@@ -15,10 +15,9 @@ pip install pandas torchaudio sentencepiece
 # generate TSV manifests
 cd fairseq
 
-python examples/speech_to_text/prep_mustc_data.py \
+python examples/speech_to_text/prep_mustc_v2_data.py \
   --data-root ${MUSTC_ROOT} --task st \
-  --vocab-type unigram --vocab-size 10000 \
-  --use-audio-input
+  --vocab-type unigram --vocab-size 10000 
 ```
 
 ## Pretrained Encoder & Decoder
