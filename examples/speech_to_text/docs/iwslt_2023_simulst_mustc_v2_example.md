@@ -16,18 +16,17 @@ pip install pandas torchaudio sentencepiece
 cd fairseq
 
 python examples/speech_to_text/prep_mustc_data.py \
-  --data-root ${MUSTC_ROOT} --task asr \
-  --vocab-type unigram --vocab-size 10000 \
-  --cmvn-type global
-
-python examples/speech_to_text/prep_mustc_data.py \
   --data-root ${MUSTC_ROOT} --task st \
   --vocab-type unigram --vocab-size 10000 \
-  --cmvn-type global
+  --use-audio-input
 ```
 
-## ASR Pretraining
-We need a pretrained offline ASR model. Assuming the save directory of the ASR model is `${ASR_SAVE_DIR}`.
+## Pretrained Encoder & Decoder
+This section covers open-sourced pretrained encoders and decoders.
+If you already have your own pretrained encoder / decoder, please jump to the next section. 
+
+For pretrained decoder, we used the [mBART model](https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.cc25.v2.tar.gz) opensourced by the [original mBART paper](https://arxiv.org/abs/2001.08210)
+
 The following command (and the subsequent training commands in this tutorial) assume training on 1 GPU (you can also train on 8 GPUs and remove the `--update-freq 8` option).
 ```
 fairseq-train ${MUSTC_ROOT}/en-de \
