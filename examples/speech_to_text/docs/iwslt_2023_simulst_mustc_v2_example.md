@@ -55,7 +55,7 @@ Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This trai
 
 ## Inference & Evaluation
 This section covers simultaneous evaluation using the wait-k policy 
-SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. The following command is for evaluation.
+[SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. The following command is for evaluation.
 
 ```
 git clone https://github.com/facebookresearch/SimulEval.git
