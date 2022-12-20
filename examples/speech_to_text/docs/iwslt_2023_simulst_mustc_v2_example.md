@@ -34,7 +34,6 @@ If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.ya
 ## Training
 This section covers 
 
-Assuming the save directory is `${ST_SAVE_DIR}`
 ```bash
  fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
         --config-yaml config_st.yaml --train-subset train_st --valid-subset dev_st \
