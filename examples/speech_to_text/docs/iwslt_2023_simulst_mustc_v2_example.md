@@ -35,7 +35,7 @@ If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.ya
 ## Training
 This section covers training an offline ST model.
 
-Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This train command assumes that you are training on one GPU, so please adjust the "update-freq" command accordingly. 
+Set `${ST_SAVE_DIR}` to be the save directory of the resulting ST model. This train command assumes that you are training on `1 GPU`, so please adjust the `update-freq` command accordingly. 
 
 ```bash
  fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
@@ -60,7 +60,8 @@ Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This trai
 
 ## Inference & Evaluation (TODO: waiting to update --agent value)
 This section covers simultaneous evaluation using the wait-k policy.
-[SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. In the following command, we evaluate the best checkpoint from the [Training](#training) section. The init-target-token we used for training was "</s>". For the wait-k policy, we use k=8 and step=5. Evaluation results will be stored at ${OUTPUT_DIR}.
+
+[SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. In the following command, we evaluate the best checkpoint obtained from the [Training](#training) section. The init-target-token we used for training was `</s>`. For the wait-k policy, we use `k=8` and `step=5`. Evaluation results will be stored at `${OUTPUT_DIR}`.
 
 ```
 git clone https://github.com/facebookresearch/SimulEval.git
@@ -71,7 +72,7 @@ k=8
 step=5
 
 simuleval \
-    --agent test_time_waitk_s2t.py
+    --agent models/streaming/script/test_time_waitk_s2t.py
     --dataloader fairseq_s2t \
     --fairseq-data ${MUSTC_ROOT}/en-${TARGET_LANG} \
     --fairseq-config ${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml \
@@ -86,7 +87,7 @@ simuleval \
     --fixed-pre-decision-ratio ${step} \
 ```
 
-The evaluation result on `tst-COMMON` for `TARGET_LANG=de` is:
+The evaluation result on `tst-COMMON` with `TARGET_LANG=de` is:
 ```bash
 BLEU       AL    AP      DAL
 13.762 5112.337 0.798 5061.954
