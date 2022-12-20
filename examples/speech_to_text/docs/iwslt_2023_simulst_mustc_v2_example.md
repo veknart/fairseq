@@ -44,7 +44,7 @@ Assuming the save directory is `${ST_SAVE_DIR}`
         --freeze-finetune-updates 0 \
         --warmup-updates 2000 --max-update 30000 --max-tokens 1024 --seed 1 \
         --load-pretrained-encoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
-        --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt
+        --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
         --task speech_to_text  \
         --arch xm_transformer  \
         --update-freq 32 
