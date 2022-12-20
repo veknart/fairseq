@@ -37,20 +37,23 @@ Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This trai
 
 ```bash
  fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
-        --config-yaml config_st.yaml --train-subset train_st --valid-subset dev_st \
-        --save-dir ${ST_SAVE_DIR} --num-workers 1  \
-        --optimizer adam --lr 0.0001 --lr-scheduler inverse_sqrt --clip-norm 10.0 \
-        --criterion label_smoothed_cross_entropy \
-        --warmup-updates 2000 --max-update 30000 --max-tokens 1024 --seed 1 \
-        --freeze-finetune-updates 0 \
-        --w2v-path ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
-        --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
-        --decoder-normalize-before --share-decoder-input-output-embed \
-        --finetune-w2v-params all --finetune-decoder-params encoder_attn,layer_norm,self_attn \
+        --save-dir ${ST_SAVE_DIR} \
+        --seed 1 --num-workers 1 --fp16 \
         --task speech_to_text  \
         --arch xm_transformer  \
-        --adaptor-proj --fp16 \
-        --update-freq 64 
+        --config-yaml config_st.yaml \
+        --train-subset train_st --valid-subset dev_st \
+        --optimizer adam --lr-scheduler inverse_sqrt --lr 0.0001 --update-freq 64 \
+        --clip-norm 10.0 --activation-fn gelu --criterion label_smoothed_cross_entropy --label-smoothing 0.2 \
+        --warmup-updates 2000 --max-update 30000 \
+        --max-tokens 1024 --max-target-positions 1024 --max-source-positions 1024 \
+        --share-decoder-input-output-embed \
+        --finetune-w2v-params all --finetune-decoder-params encoder_attn,layer_norm,self_attn \
+        --w2v-path ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
+        --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
+        --decoder-normalize-before \
+        --adaptor-proj \
+        --apply-mask 
 ```
 
 ## Inference & Evaluation (TODO: waiting to update --agent value)
