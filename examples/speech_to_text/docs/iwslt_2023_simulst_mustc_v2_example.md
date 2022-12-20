@@ -27,9 +27,9 @@ If you already have your own pretrained encoder / decoder, please jump to the ne
 
 For pretrained encoder, we used a [wav2vec 2.0 model](https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small_960h.pt) opensourced by the [original wav2vec 2.0 paper](https://arxiv.org/abs/2006.11477). Download and extract this model to `${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt`
 
-For pretrained decoder, we used an [mBART model](https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.cc25.v2.tar.gz) opensourced by the [original mBART paper](https://arxiv.org/abs/2001.08210). Download and extract the model to ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt, the dict to ${MUSTC_ROOT}/en-${TARGET_LANG}/dict.txt and the sentencepiece model to ${MUSTC_ROOT}/en-${TARGET_LANG}/sentence.bpe.model
+For pretrained decoder, we used an [mBART model](https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.cc25.v2.tar.gz) opensourced by the [original mBART paper](https://arxiv.org/abs/2001.08210). Download and extract the model to `${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt`, the dict to `${MUSTC_ROOT}/en-${TARGET_LANG}/dict.txt` and the sentencepiece model to `${MUSTC_ROOT}/en-${TARGET_LANG}/sentence.bpe.model`
 
-If using the above mBART model, in ${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml, set the "sentencepiece_model" parameter (under "bpe_tokenizer") to "sentence.bpe.model" and the "vocab_filename" parameter to "dict.txt"
+If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml`, set the "sentencepiece_model" parameter (under "bpe_tokenizer") to "sentence.bpe.model" and the "vocab_filename" parameter to "dict.txt"
 
 ## Training
 
