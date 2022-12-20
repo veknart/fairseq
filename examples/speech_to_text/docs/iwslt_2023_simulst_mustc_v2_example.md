@@ -1,13 +1,13 @@
-# IWSLT 2023 Simultaneous Speech Translation (SimulST) on MuST-C 2.0
+# IWSLT 2023 Simultaneous Speech Translation on MuST-C 2.0
 
-This is a tutorial of training and evaluating a transformer *wait-k* simultaneous model on MUST-C English-Germen Dataset, from [SimulMT to SimulST: Adapting Simultaneous Text Translation to End-to-End Simultaneous Speech Translation](https://www.aclweb.org/anthology/2020.aacl-main.58.pdf).
+This is a short tutorial on training an ST model and evaluating it using the wait-k policy.
 
 ## Data Preparation
-This section introduces the data preparation for training and evaluation.
-If you only want to evaluate the model, please jump to [Inference & Evaluation](#inference--evaluation)
+This section covers the data preparation required for training and evaluation.
+If you are only interested in model inference / evaluation, please jump to [Inference & Evaluation](#inference--evaluation)
 
-[Download](https://ict.fbk.eu/must-c) and unpack MuST-C data to a path
-`${MUSTC_ROOT}/en-${TARGET_LANG_ID}`, then preprocess it with
+[Download](https://ict.fbk.eu/must-c-release-v2-0/) and unpack the MuST-C 2.0 data to the path
+`${MUSTC_ROOT}/en-${TARGET_LANG_ID}`. Then run the following commands below to preprocess the data
 ```bash
 # Additional Python packages for S2T data processing/model training
 pip install pandas torchaudio sentencepiece
