@@ -47,6 +47,7 @@ Assuming the save directory is `${ST_SAVE_DIR}`
         --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
         --task speech_to_text  \
         --arch xm_transformer  \
+        --adaptor-proj \
         --update-freq 32 
 ```
 
