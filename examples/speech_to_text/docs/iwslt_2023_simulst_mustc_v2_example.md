@@ -83,7 +83,7 @@ simuleval \
     --fixed-pre-decision-ratio ${step} \
 ```
 
-The evaluation result on `tst-COMMON` for TARGET_LANG=de is:
+The evaluation result on `tst-COMMON` for `TARGET_LANG=de` is:
 ```bash
 BLEU       AL    AP      DAL
 13.762 5112.337 0.798 5061.954
