@@ -12,9 +12,7 @@ If you are only interested in model inference / evaluation, please jump to the [
 # additional python packages for S2T data processing / model training
 pip install pandas torchaudio sentencepiece
 
-# Generate TSV manifests, features, vocabulary,
-# global cepstral and mean estimation,
-# and configuration for each language
+# generate TSV manifests
 cd fairseq
 
 python examples/speech_to_text/prep_mustc_data.py \
