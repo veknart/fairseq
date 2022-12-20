@@ -1,13 +1,13 @@
 # IWSLT 2023 Simultaneous Speech Translation on MuST-C 2.0
 
-This is a short tutorial on training an ST model and evaluating it using the wait-k policy.
+This is a short tutorial on training an ST model and evaluating it using the wait-k policy
 
 ## Data Preparation
-This section covers the data preparation required for training and evaluation.
-If you are only interested in model inference / evaluation, please jump to the [Inference & Evaluation](#inference--evaluation) section.
+This section covers the data preparation required for training and evaluation
+If you are only interested in model inference / evaluation, please jump to the [Inference & Evaluation](#inference--evaluation) section
 
 [Download](https://ict.fbk.eu/must-c-release-v2-0/) and unpack the MuST-C 2.0 data to the path
-`${MUSTC_ROOT}/en-${TARGET_LANG_ID}`. Then run the following commands below to preprocess the data
+`${MUSTC_ROOT}/en-${TARGET_LANG}`. Then run the following commands below to preprocess the data
 ```bash
 # additional python packages for S2T data processing / model training
 pip install pandas torchaudio sentencepiece
@@ -22,23 +22,16 @@ python examples/speech_to_text/prep_mustc_data.py \
 ```
 
 ## Pretrained Encoder & Decoder
-This section covers open-sourced pretrained encoders and decoders.
-If you already have your own pretrained encoder / decoder, please jump to the next section. 
+This section covers open-sourced pretrained encoders and decoders
+If you already have your own pretrained encoder / decoder, please jump to the next section
 
-For pretrained decoder, we used the [mBART model](https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.cc25.v2.tar.gz) opensourced by the [original mBART paper](https://arxiv.org/abs/2001.08210)
+For pretrained encoder, we used a [wav2vec 2.0 model](https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small_960h.pt) opensourced by the [original wav2vec 2.0 paper](https://arxiv.org/abs/2006.11477). Download and extract this model to ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt
 
-The following command (and the subsequent training commands in this tutorial) assume training on 1 GPU (you can also train on 8 GPUs and remove the `--update-freq 8` option).
-```
-fairseq-train ${MUSTC_ROOT}/en-de \
-  --config-yaml config_asr.yaml --train-subset train_asr --valid-subset dev_asr \
-  --save-dir ${ASR_SAVE_DIR} --num-workers 4 --max-tokens 40000 --max-update 100000 \
-  --task speech_to_text --criterion label_smoothed_cross_entropy --report-accuracy \
-  --arch convtransformer_espnet --optimizer adam --lr 0.0005 --lr-scheduler inverse_sqrt \
-  --warmup-updates 10000 --clip-norm 10.0 --seed 1 --update-freq 8
-```
-A pretrained ASR checkpoint can be downloaded [here](https://dl.fbaipublicfiles.com/simultaneous_translation/must_c_v1_en_de_pretrained_asr)
+For pretrained decoder, we used an [mBART model](https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.cc25.v2.tar.gz) opensourced by the [original mBART paper](https://arxiv.org/abs/2001.08210). Download and extract the model to ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt, the dict to ${MUSTC_ROOT}/en-${TARGET_LANG}/dict.txt and the sentencepiece model to ${MUSTC_ROOT}/en-${TARGET_LANG}/sentence.bpe.model
 
-## Simultaneous Speech Translation Training
+If using the above mBART model, in ${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml, set the "sentencepiece_model" parameter (under "bpe_tokenizer") to "sentence.bpe.model" and the "vocab_filename" parameter to "dict.txt"
+
+## Training
 
 ### Wait-K with fixed pre-decision module
 Fixed pre-decision indicates that the model operate simultaneous policy on the boundaries of fixed chunks.
