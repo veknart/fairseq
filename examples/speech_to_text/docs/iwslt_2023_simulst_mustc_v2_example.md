@@ -4,12 +4,12 @@ This is a short tutorial on training an ST model and evaluating it using the wai
 
 ## Data Preparation
 This section covers the data preparation required for training and evaluation.
-If you are only interested in model inference / evaluation, please jump to [Inference & Evaluation](#inference--evaluation)
+If you are only interested in model inference / evaluation, please jump to the [Inference & Evaluation](#inference--evaluation) section.
 
 [Download](https://ict.fbk.eu/must-c-release-v2-0/) and unpack the MuST-C 2.0 data to the path
 `${MUSTC_ROOT}/en-${TARGET_LANG_ID}`. Then run the following commands below to preprocess the data
 ```bash
-# Additional Python packages for S2T data processing/model training
+# additional python packages for S2T data processing / model training
 pip install pandas torchaudio sentencepiece
 
 # Generate TSV manifests, features, vocabulary,
