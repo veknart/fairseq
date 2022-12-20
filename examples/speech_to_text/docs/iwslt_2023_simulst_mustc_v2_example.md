@@ -41,7 +41,7 @@ Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This trai
         --save-dir ${ST_SAVE_DIR} --num-workers 1  \
         --optimizer adam --lr 0.0001 --lr-scheduler inverse_sqrt --clip-norm 10.0 \
         --criterion label_smoothed_cross_entropy \
-        --warmup-updates 2000 --max-update 30000 --max-tokens 163840 --seed 1 \
+        --warmup-updates 2000 --max-update 30000 --max-tokens 1024 --seed 1 \
         --freeze-finetune-updates 0 \
         --w2v-path ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
         --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
