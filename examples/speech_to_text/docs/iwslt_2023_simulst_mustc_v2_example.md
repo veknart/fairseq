@@ -35,7 +35,7 @@ If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.ya
 ## Training
 This section covers training an offline ST model.
 
-Set `${ST_SAVE_DIR}` to be the save directory of the resulting ST model. This train command assumes that you are training on `1 GPU`, so please adjust the `update-freq` command accordingly. 
+Set `${ST_SAVE_DIR}` to be the save directory of the resulting ST model. This train command assumes that you are training on `1 GPU`, so please adjust the `update-freq` value accordingly. 
 
 ```bash
  fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
@@ -58,7 +58,7 @@ Set `${ST_SAVE_DIR}` to be the save directory of the resulting ST model. This tr
         --apply-mask 
 ```
 
-## Inference & Evaluation (TODO: waiting to update --agent value)
+## Inference & Evaluation
 This section covers simultaneous evaluation using the wait-k policy.
 
 [SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. In the following command, we evaluate the best checkpoint obtained from the [Training](#training) section. The init-target-token we used for training was `</s>`. For the wait-k policy, we use `k=8` and `step=5`. Evaluation results will be stored at `${OUTPUT_DIR}`.
