@@ -32,43 +32,24 @@ For pretrained decoder, we used an [mBART model](https://dl.fbaipublicfiles.com/
 If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml`, set the "sentencepiece_model" parameter (under "bpe_tokenizer") to "sentence.bpe.model" and the "vocab_filename" parameter to "dict.txt"
 
 ## Training
+This section covers 
 
-### Wait-K with fixed pre-decision module
-Fixed pre-decision indicates that the model operate simultaneous policy on the boundaries of fixed chunks.
-Here is a example of fixed pre-decision ratio 7 (the simultaneous decision is made every 7 encoder states) and
-a wait-3 policy model. Assuming the save directory is `${ST_SAVE_DIR}`
+Assuming the save directory is `${ST_SAVE_DIR}`
 ```bash
- fairseq-train ${MUSTC_ROOT}/en-de \
+ fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
         --config-yaml config_st.yaml --train-subset train_st --valid-subset dev_st \
         --save-dir ${ST_SAVE_DIR} --num-workers 8  \
         --optimizer adam --lr 0.0001 --lr-scheduler inverse_sqrt --clip-norm 10.0 \
         --criterion label_smoothed_cross_entropy \
-        --warmup-updates 4000 --max-update 100000 --max-tokens 40000 --seed 2 \
-        --load-pretrained-encoder-from ${ASR_SAVE_DIR}/checkpoint_best.pt \
+        --freeze-finetune-updates 0 \
+        --warmup-updates 2000 --max-update 30000 --max-tokens 1024 --seed 1 \
+        --load-pretrained-encoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
+        --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt
         --task speech_to_text  \
-        --arch convtransformer_simul_trans_espnet  \
-        --simul-type waitk_fixed_pre_decision  \
-        --waitk-lagging 3 \
-        --fixed-pre-decision-ratio 7 \
-        --update-freq 8
+        --arch xm_transformer  \
+        --update-freq 32 
+```
 
-```
-### Monotonic multihead attention with fixed pre-decision module
-```
- fairseq-train ${MUSTC_ROOT}/en-de \
-        --config-yaml config_st.yaml --train-subset train_st --valid-subset dev_st \
-        --save-dir ${ST_SAVE_DIR} --num-workers 8  \
-        --optimizer adam --lr 0.0001 --lr-scheduler inverse_sqrt --clip-norm 10.0 \
-        --warmup-updates 4000 --max-update 100000 --max-tokens 40000 --seed 2 \
-        --load-pretrained-encoder-from ${ASR_SAVE_DIR}/${CHECKPOINT_FILENAME} \
-        --task speech_to_text  \
-        --criterion latency_augmented_label_smoothed_cross_entropy \
-        --latency-weight-avg 0.1 \
-        --arch convtransformer_simul_trans_espnet  \
-        --simul-type infinite_lookback_fixed_pre_decision  \
-        --fixed-pre-decision-ratio 7 \
-        --update-freq 8
-```
 ## Inference & Evaluation
 [SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation.
 The following command is for evaluation.
