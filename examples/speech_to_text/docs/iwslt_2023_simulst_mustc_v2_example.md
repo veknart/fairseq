@@ -8,7 +8,7 @@ This section covers the data preparation required for training and evaluation.
 If you are only interested in model inference / evaluation, please jump to the [Inference & Evaluation](#inference--evaluation) section.
 
 [Download](https://ict.fbk.eu/must-c-release-v2-0/) and unpack the MuST-C 2.0 data to the path
-`${MUSTC_ROOT}/en-${TARGET_LANG}`. Then run the following commands below to preprocess the data
+`${MUSTC_ROOT}/en-${TARGET_LANG}`. Then run the following commands below to preprocess the data.
 ```bash
 # additional python packages for S2T data processing / model training
 pip install pandas torchaudio sentencepiece
@@ -22,8 +22,9 @@ python examples/speech_to_text/prep_mustc_v2_data.py \
 ```
 
 ## Pretrained Encoder & Decoder
-This section covers open-sourced pretrained encoders and decoders
-If you already have your own pretrained encoder / decoder, please jump to the next section
+This section covers open-sourced pretrained encoders and decoders.
+
+If you already have your own pretrained encoder / decoder, please jump to the next section.
 
 For pretrained encoder, we used a [wav2vec 2.0 model](https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small_960h.pt) opensourced by the [original wav2vec 2.0 paper](https://arxiv.org/abs/2006.11477). Download and extract this model to `${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt`
 
