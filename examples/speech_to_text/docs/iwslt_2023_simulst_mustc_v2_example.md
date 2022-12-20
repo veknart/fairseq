@@ -84,7 +84,7 @@ simuleval \
     --source-segment-size `python -c "print(int(${step} * 40))"` \
     --waitk-lagging ${k} \
     --init-target-token "</s>" \
-    --fixed-pre-decision-ratio ${step} \
+    --fixed-pre-decision-ratio ${step} 
 ```
 
 The evaluation result on `tst-COMMON` with `TARGET_LANG=de` is:
