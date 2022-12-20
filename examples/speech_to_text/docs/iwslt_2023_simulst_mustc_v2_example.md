@@ -32,25 +32,29 @@ For pretrained decoder, we used an [mBART model](https://dl.fbaipublicfiles.com/
 If using the above mBART model, in `${MUSTC_ROOT}/en-${TARGET_LANG}/config_st.yaml`, set the "sentencepiece_model" parameter (under "bpe_tokenizer") to "sentence.bpe.model" and the "vocab_filename" parameter to "dict.txt"
 
 ## Training
-This section covers 
+This section covers training an offline ST model
+Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This train command assumes that you are training on one GPU, so please adjust the "update-freq" command accordingly. 
 
 ```bash
  fairseq-train ${MUSTC_ROOT}/en-${TARGET_LANG} \
         --config-yaml config_st.yaml --train-subset train_st --valid-subset dev_st \
-        --save-dir ${ST_SAVE_DIR} --num-workers 8  \
+        --save-dir ${ST_SAVE_DIR} --num-workers 1  \
         --optimizer adam --lr 0.0001 --lr-scheduler inverse_sqrt --clip-norm 10.0 \
         --criterion label_smoothed_cross_entropy \
+        --warmup-updates 2000 --max-update 30000 --max-tokens 163840 --seed 1 \
         --freeze-finetune-updates 0 \
-        --warmup-updates 2000 --max-update 30000 --max-tokens 1024 --seed 1 \
-        --load-pretrained-encoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
+        --w2v-path ${MUSTC_ROOT}/en-${TARGET_LANG}/wav2vec_small_960h.pt \
         --load-pretrained-decoder-from ${MUSTC_ROOT}/en-${TARGET_LANG}/model.pt \
+        --decoder-normalize-before --share-decoder-input-output-embed \
+        --finetune-w2v-params all --finetune-decoder-params encoder_attn,layer_norm,self_attn \
         --task speech_to_text  \
         --arch xm_transformer  \
-        --adaptor-proj \
-        --update-freq 32 
+        --adaptor-proj --fp16 \
+        --update-freq 64 
 ```
 
 ## Inference & Evaluation
+This section covers simultaneous evaluation using the wait-k policy. 
 [SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation.
 The following command is for evaluation.
 
