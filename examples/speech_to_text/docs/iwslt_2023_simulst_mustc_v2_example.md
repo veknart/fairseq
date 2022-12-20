@@ -53,24 +53,32 @@ Set ${ST_SAVE_DIR} to be the save directory of the resulting ST model. This trai
         --update-freq 64 
 ```
 
-## Inference & Evaluation
+## Inference & Evaluation (TODO: waiting to update --agent value)
 This section covers simultaneous evaluation using the wait-k policy 
-[SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. The following command is for evaluation.
+[SimulEval](https://github.com/facebookresearch/SimulEval) is used for evaluation. In the following command, we evaluate the best checkpoint from the [Training](#training) section. For the wait-k poliyc, we use k=8 and step=5. 
 
 ```
 git clone https://github.com/facebookresearch/SimulEval.git
 cd SimulEval
 pip install -e .
 
+k=8
+step=5
+
 simuleval \
-    --agent ${FAIRSEQ}/examples/speech_to_text/simultaneous_translation/agents/fairseq_simul_st_agent.py
-    --source ${SRC_LIST_OF_AUDIO}
-    --target ${TGT_FILE}
-    --data-bin ${MUSTC_ROOT}/en-de \
-    --config config_st.yaml \
-    --model-path ${ST_SAVE_DIR}/${CHECKPOINT_FILENAME} \
-    --output ${OUTPUT} \
-    --scores
+    --agent test_time_waitk_s2t.py
+    --dataloader fairseq_s2t \
+    --fairseq-data ${data} \
+    --fairseq-config ${config} \
+    --fairseq-gen-subset ${subset}\
+    --checkpoint ${checkpoint} \
+    --sentencepiece-model ${spm_path} \
+    --output ${output} \
+    --device cuda:0 \
+    --source-segment-size `python -c "print(int(${step} * 40))"` \
+    --waitk-lagging ${k} \
+    --init-target-token "</s>" \
+    --fixed-pre-decision-ratio ${step} \
 ```
 
 The source file `${SRC_LIST_OF_AUDIO}` is a list of paths of audio files. Assuming your audio files stored at `/home/user/data`,
