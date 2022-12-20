@@ -1,6 +1,6 @@
 # IWSLT 2023 Simultaneous Speech Translation on MuST-C 2.0
 
-This is a short tutorial on training an ST model and evaluating it using the wait-k policy
+This is a short tutorial on training an ST model and evaluating it using the wait-k policy.
 
 ## Data Preparation
 This section covers the data preparation required for training and evaluation.
